@@ -1,94 +1,130 @@
 import { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {Feather} from "@expo/vector-icons"
 
-export default function UserPost(){
-    const printInformation=(text:string)=>{
-        console.log(text);
-    }
+export default function LoginScreen(){
+    
     return(
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Image style={styles.avatarImage} source={{uri:"https://cdn-icons-png.flaticon.com/512/3849/3849119.png"}}/>
-                <View style={styles.infoContainer}>
-                    <Text style={styles.name}>FernandoDev</Text>
-                    <Text style={styles.username}>@fernandoDev</Text>
-                    <TouchableOpacity
-                        onPress={(value)=>{
-                            printInformation("Press from link")
-                        }}
-                    >
-                        <Text style={styles.edit}>Edit Profile</Text>
-                    </TouchableOpacity>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding":"height"}
+
+        >
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+                <View style={styles.header}>
+                    <View style={styles.logoContainer}>
+                        <Feather name="shopping-bag" size={25} color="#fff"/>                        
+                    </View>
+                    <Text style={styles.appNameLabel}>ShopEase</Text>
+                    <Text style={styles.welcomeLabel}>Welcome back! Please enter your details</Text>
                 </View>
-            </View>
-            <View style={styles.followsInformation}>
-                <View style={styles.followContainer}>
-                    <Text style={styles.label}>Post</Text>
-                    <Text style={styles.value}>120</Text>
+                {/**CARD */}
+                <View style={styles.card}>
+                    <Text style={styles.label}>Email Address</Text>
+                    <View style={styles.inputContainer}>
+                        <Feather name="mail" size={20} color="#9CA3AF"/>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="name@gmail.com"
+                            keyboardType="email-address"
+                        />
+
+                    </View>
+                    <View style={styles.passwordRow}>
+                        <Text style={styles.label}>Password</Text>
+                        <TouchableOpacity>
+                            <Text style={styles.forgotPasswordLabel}>Forgot Password</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Feather name="lock" size={20} color="#9CA3AF"/>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="**************"
+                            secureTextEntry={true}
+                        />
+                    </View>
+
                 </View>
-                <View style={styles.followContainer}>
-                    <Text style={styles.label}>Following</Text>
-                    <Text style={styles.value}>200</Text>
-                </View>
-                <View style={styles.followContainer}>
-                    <Text style={styles.label}>Followers</Text>
-                    <Text style={styles.value}>300</Text>
-                </View>
-            </View>
-            <Text style={styles.bio}>
-                Esta película dirigida por Steven Spilberg retrata la vida del estadounidense Frank Abagnale Jr., un estafador que, a partir de los 19 años se hace pasar por piloto de avión, médico y abogado, y amasa así una importante fortuna. Además, este personaje (encarnado por Leonardo DiCaprio) apela a la falsificación de cheques, con una destreza tal que termina siendo reclutado por el FBI como asesor. El filme fue estrenado en 2002 y recibió dos nominaciones al Oscar, en las categorías de Mejor Actor de Reparto para Christopher Walken y Mejor Banda Sonora para John Williams.
-            </Text>
-            
-        </View>
+            </ScrollView>
+
+        </KeyboardAvoidingView>
+        
     )
+    
 }
+
 const styles = StyleSheet.create({
+
     container:{
-        backgroundColor:"#fff",
         flex:1
     },
+    scrollContainer:{
+        flexGrow:1,
+        justifyContent:"center",
+        padding:24,
+        
+    },
     header:{
-        flexDirection:"row",
-        marginTop:80,
-        alignItems:"center",
-        padding:20
-    },
-    avatarImage:{
-        width:60,
-        height:60,
-        borderRadius:25
-    },
-    infoContainer:{
-        marginLeft:20
-    },
-    name:{
-        fontSize:25,
-        fontWeight:'bold'
-    },
-    username:{
-        color:"#b1abab",
-        marginBottom:10
-    },
-    edit:{
-        color:"#0C19F5"
-    },
-    followsInformation:{
-        flexDirection:"row",
-        alignItems:"center",
-        padding:20,
-
-    },
-    followContainer:{
-        flex:1,
         alignItems:"center"
     },
+    logoContainer:{
+        width:60,
+        height:60,
+        backgroundColor:"#00B074",
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:16
+    },
+    appNameLabel:{
+        fontSize:32,
+        fontWeight:"bold",
+        color:"#006C47"
+    },
+    welcomeLabel:{
+        fontSize:15,
+        color:"#6B7280",
+        marginBottom:25
+    },
+    card:{
+        backgroundColor:"#fff",
+        borderWidth:1,
+        borderColor:"#F3F4F6",
+        borderRadius:14,
+        shadowColor:"#fff",
+        shadowOffset:{width:0,height:2},
+        shadowOpacity:0.03,
+        shadowRadius:8,
+        padding:24,
+        elevation:2
+    },
     label:{
-        color:"#b1abab"
+        fontSize:14,
+        color:"#374151",
+        marginBottom:10
     },
-    value:{
-        fontSize:20
+    inputContainer:{
+        flexDirection:"row",
+        alignItems:"center",
+        borderWidth:1,
+        borderColor:"#D1D5DB",
+        paddingHorizontal:12,
+        borderRadius:8,
+        marginBottom:15,
+        height:50
     },
-    bio:{
-        padding:20
+    input:{
+        flex:1,
+        height:"100%",
+        marginLeft:8
+    },
+    passwordRow:{
+        flexDirection:"row",
+        justifyContent:"space-between"
+    },
+    forgotPasswordLabel:{
+        color:"#006C47",
+        fontWeight:"600"
     }
+    
 })
