@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, StyleProp } from 'react-native';
 import {Feather} from "@expo/vector-icons"
+import { useLogin } from "../src/viewmodels/use-login";
+import { useRouter } from "expo-router";
 
 export default function LoginScreen(){
+    const router = useRouter()
+    const {
+        togglePasswordVisibility,
+        isPasswordVisibility
+    }= useLogin()
     
     return(
         <KeyboardAvoidingView
@@ -32,7 +39,9 @@ export default function LoginScreen(){
                     </View>
                     <View style={styles.passwordRow}>
                         <Text style={styles.label}>Password</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                                                
+                        >
                             <Text style={styles.forgotPasswordLabel}>Forgot Password</Text>
                         </TouchableOpacity>
                     </View>
@@ -43,8 +52,28 @@ export default function LoginScreen(){
                             placeholder="**************"
                             secureTextEntry={true}
                         />
+                        <TouchableOpacity
+                            onPress={togglePasswordVisibility}
+                        >
+                            <Feather name={isPasswordVisibility ? "eye-off":"eye"} size={20} color="#9CA3AF"/>
+                        </TouchableOpacity>
                     </View>
+                    <TouchableOpacity
+                        style={styles.buttonLogin}
 
+                    >
+                        <Text style={styles.buttonLoginText}>Log in</Text>
+
+                    </TouchableOpacity>
+
+                </View>
+                <View style={styles.signUpRow}>
+                    <Text style={styles.signUpText}>Does not have an account? </Text>
+                    <TouchableOpacity
+                        onPress={()=> router.push("/(public)/register")}
+                    >
+                        <Text style={styles.singUpLink}>Sign up for free</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
 
@@ -125,6 +154,34 @@ const styles = StyleSheet.create({
     forgotPasswordLabel:{
         color:"#006C47",
         fontWeight:"600"
+    },
+    buttonLogin:{
+        backgroundColor:"#006C47",
+        height:50,
+        justifyContent:"center",
+        alignItems:"center",
+        borderRadius:8
+
+    },
+    buttonLoginText:{
+        color:"#fff",
+        fontSize:16,
+        fontWeight:"bold"
+
+    },
+    signUpRow:{
+        flexDirection:"row",
+        justifyContent:"center",
+        marginTop:32
+    },
+    signUpText:{
+        fontSize:14,
+        color:"#6B7280"
+    },
+    singUpLink:{
+        fontSize:14,
+        fontWeight:"bold",
+        color:"#006C47"
     }
     
 })
