@@ -1,8 +1,15 @@
-import { useState } from "react";
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import {Feather} from "@expo/vector-icons"
+import { useLogin } from "../src/viewmodels/use-login";
+import {  useRouter } from "expo-router";
 
 export default function LoginScreen(){
+    const router = useRouter()
+    const{
+        isPasswordVisible,
+        togglePasswordVisibility
+    }=useLogin()
     
     return(
         <KeyboardAvoidingView
@@ -41,9 +48,31 @@ export default function LoginScreen(){
                         <TextInput
                             style={styles.input}
                             placeholder="**************"
-                            secureTextEntry={true}
+                            secureTextEntry={isPasswordVisible ?true:false}
                         />
+                        <TouchableOpacity
+                            onPress={togglePasswordVisibility}
+                        
+                        >
+                            <Feather name={isPasswordVisible ? "eye-off" : "eye"} size={20} color="#9CA3AF"/>
+                        </TouchableOpacity>
+                        
                     </View>
+                    <TouchableOpacity
+                        style={styles.buttonLogin}
+                    >
+                        <Text style={styles.buttonLoginText}>Log in</Text>
+                    </TouchableOpacity>
+
+                </View>
+                <View style={styles.signUpRow}>
+                    <Text style={styles.singUpText}>Does not have account? </Text>
+                    <TouchableOpacity
+                        onPress={()=> router.push("/(public)/register")}
+                    >
+                        <Text style={styles.signUpTextLink}>Sign up for free</Text>
+                    </TouchableOpacity>
+                    
 
                 </View>
             </ScrollView>
@@ -125,6 +154,32 @@ const styles = StyleSheet.create({
     forgotPasswordLabel:{
         color:"#006C47",
         fontWeight:"600"
+    },
+    buttonLogin:{
+        backgroundColor:"#006C47",
+        justifyContent:"center",
+        alignItems:"center",
+        height:50,
+        borderRadius:8
+    },
+    buttonLoginText:{
+        color:"#fff",
+        fontSize:16,
+        fontWeight:"bold"
+    },
+    signUpRow:{
+        flexDirection:"row",
+        justifyContent:"center",
+        marginTop:35
+    },
+    singUpText:{
+        fontSize:14,
+        color:"#6B7280"
+    },
+    signUpTextLink:{
+        fontSize:14,
+        fontWeight:"bold",
+        color:"#006C47"
     }
     
 })
