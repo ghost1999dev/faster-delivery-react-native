@@ -8,6 +8,11 @@ export function useLogin(){
         
         setIsPasswordVisible((prev)=>!prev)
     }
+    
+    const fetchDataFromDataBase=()=>{
+        
+    }
+
     return{
         isPasswordVisible,
         togglePasswordVisibility
