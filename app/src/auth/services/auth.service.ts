@@ -17,7 +17,30 @@ export const AuthService ={
             throw new Error("Server error")
         }
     },
-    register:async()=>{
+    register:async(
+        name:string,
+        lastname:string,
+        phone:string,
+        email:string,
+        password:string
+    )=>{
+        try {
+            const response = await axios.post(`${API_URL}/auth/register`,{
+                name,
+                lastname,
+                phone,
+                email,
+                password
+            })
+
+            console.log(response.data);
+            
+        } catch (error:any) {
+            if(axios.isAxiosError(error) && error.response){
+                throw new Error(error.response.data?.message || "Error to login")
+            }
+            throw new Error("Server error")
+        }
         
     }
 }
