@@ -2,6 +2,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 import { Image, StyleSheet, Text, View, StyleProp, TouchableOpacity } from 'react-native';
 import { useDrawer } from "../src/admin/viewmodels/use-drawer";
+import { Feather } from "@expo/vector-icons";
 export default function ProtectedLayout() {
     const {profile,navigationOptions}=useDrawer()
   return (
@@ -32,19 +33,34 @@ export default function ProtectedLayout() {
                     </View>
 
                 </View>
-                <View>
+                <View style={styles.menuList}>
                     {navigationOptions.map((option)=>{
                         const isSelected = activeRouteName === option.name
                         return(
                             <TouchableOpacity
+                                style={[styles.menuItemList, isSelected && styles.menuItemSelected]}
                                 key={option.name}
                             >
-                                <Text>{option.label}</Text>
+                                <Feather
+                                    name={option.icon as any}
+                                    size={20}
+                                    color={isSelected ? "#FFF":"#374151"}
+                                    style={styles.menuIcon}
+                                />
+                                <Text style={[styles.menuText,isSelected && styles.menuTextSelected]}>{option.label}</Text>
 
                             </TouchableOpacity>
                         )
                     })}
                 </View>
+                <TouchableOpacity
+                    style={styles.logoutButton}
+                
+                >
+                    <Feather name="log-out" size={20} color="#EF4444" style={styles.menuIcon}/>
+                    <Text style={styles.logoutText}>Log Out</Text>
+
+                </TouchableOpacity>
 
             </View>
         )
@@ -96,5 +112,46 @@ const styles = StyleSheet.create({
         paddingVertical:2,
         marginTop:8,
         borderRadius:12
+    },
+    menuList:{
+        flex:1,
+        paddingTop:16,
+        paddingHorizontal:12
+    },
+    menuItemList:{
+        flexDirection:"row",
+        alignItems:"center",
+        paddingVertical:14,
+        paddingHorizontal:16,
+        borderRadius:24,
+        marginVertical:4
+    },
+    menuItemSelected:{
+        backgroundColor:"#00B074"
+    },
+    menuIcon:{
+        marginRight:15
+    },
+    menuText:{
+        fontSize:15,
+        fontWeight:"bold",
+        color:"#374151"
+    },
+    menuTextSelected:{
+        color:"#FFF"
+    },
+    logoutButton:{
+        flexDirection:"row",
+        alignItems:"center",
+        padding:24,
+        borderTopWidth:1,
+        borderTopColor:"#E5E7EB",
+        marginBottom:15
+    },
+    logoutText:{
+        fontSize:15,
+        fontWeight:"bold",
+        color:"#EF4444"
     }
+
 })
