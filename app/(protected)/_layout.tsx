@@ -3,8 +3,10 @@ import { Drawer } from "expo-router/drawer";
 import { Image, StyleSheet, Text, View, StyleProp, TouchableOpacity } from 'react-native';
 import { useDrawer } from "../src/admin/viewmodels/use-drawer";
 import { Feather } from "@expo/vector-icons";
+import { useAuth } from "../src/context/AuthContext";
 export default function ProtectedLayout() {
     const {profile,navigationOptions}=useDrawer()
+    const {clearSession}=useAuth()
   return (
     <GestureHandlerRootView>
       <Drawer screenOptions={{
@@ -55,6 +57,9 @@ export default function ProtectedLayout() {
                 </View>
                 <TouchableOpacity
                     style={styles.logoutButton}
+                    onPress={async()=>{
+                        await clearSession()
+                    }}
                 
                 >
                     <Feather name="log-out" size={20} color="#EF4444" style={styles.menuIcon}/>
