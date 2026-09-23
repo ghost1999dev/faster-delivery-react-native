@@ -4,9 +4,11 @@ import { Image, StyleSheet, Text, View, StyleProp, TouchableOpacity } from 'reac
 import { useDrawer } from "../src/admin/viewmodels/use-drawer";
 import { Feather } from "@expo/vector-icons";
 import { useAuth } from "../src/context/AuthContext";
+import { useRouter } from "expo-router";
 export default function ProtectedLayout() {
     const {profile,navigationOptions}=useDrawer()
     const {clearSession}=useAuth()
+    const router = useRouter()
   return (
     <GestureHandlerRootView>
       <Drawer screenOptions={{
@@ -42,6 +44,9 @@ export default function ProtectedLayout() {
                             <TouchableOpacity
                                 style={[styles.menuItemList, isSelected && styles.menuItemSelected]}
                                 key={option.name}
+                                onPress={()=>{
+                                    router.push(`/(protected)/${option.name}` as any)
+                                }}
                             >
                                 <Feather
                                     name={option.icon as any}
