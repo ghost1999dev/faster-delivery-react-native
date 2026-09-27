@@ -16,8 +16,8 @@ import { useState } from "react";
 export default function ProtectedLayout() {
   const { profile, navigationOptions } = useDrawer();
   const { clearSession } = useAuth();
-  const [isInventoryExpanded, setIsInventoryExpanded] = useState(false);
   const router = useRouter();
+  const [isInventoryExpanded, setIsInventoryExpanded] = useState(false);
   return (
     <GestureHandlerRootView>
       <Drawer
@@ -48,7 +48,7 @@ export default function ProtectedLayout() {
               <View style={styles.menuList}>
                 {navigationOptions.map((option) => {
                   const isSelected = activeRouteName === option.name;
-                  const hasSubItems = !!option.subItems;
+                  const hasSubItems = !!option.subitems;
                   return (
                     <View key={option.name}>
                       <TouchableOpacity
@@ -56,7 +56,6 @@ export default function ProtectedLayout() {
                           styles.menuItemList,
                           isSelected && styles.menuItemSelected,
                         ]}
-                        key={option.name}
                         onPress={() => {
                           if (hasSubItems) {
                             setIsInventoryExpanded(!isInventoryExpanded);
@@ -79,8 +78,20 @@ export default function ProtectedLayout() {
                         >
                           {option.label}
                         </Text>
+                        {hasSubItems && (
+                          <Feather
+                            name={
+                              isInventoryExpanded
+                                ? "chevron-up"
+                                : "chevron-down"
+                            }
+                            size={16}
+                            style={{ marginLeft: "auto" }}
+                          />
+                        )}
                       </TouchableOpacity>
-                      {hasSubItems && isInventoryExpanded && option.subItems?.map((sub)=>{
+                        
+                      {hasSubItems && isInventoryExpanded && option.subitems?.map((sub)=>{
                         const isSubSelected = activeRouteName === sub.name
                         return(
                             <TouchableOpacity
@@ -89,17 +100,17 @@ export default function ProtectedLayout() {
                                     styles.menuItemList,
                                     {paddingLeft:40},
                                     isSubSelected && styles.menuItemSelected
-                                    
                                 ]}
-                                onPress={()=>router.push(`(protected)/${sub.name}` as any)}
+                                onPress={()=>router.push(`/(protected)/${sub.name}` as any)}
+
                             >
                                 <Feather
                                     name={sub.icon as any}
                                     size={16}
-                                    color={isSubSelected ? "#FFF":"#4B5563"}
+                                    color={isSubSelected ? "#FFF": "#4B5563"}
                                     style={styles.menuIcon}
                                 />
-                                <Text style={[styles.menuText,{fontSize:14}, isSubSelected && styles.menuTextSelected]}>{sub.label}</Text>
+                                <Text style={[styles.menuText, {fontSize:14},isSubSelected && styles.menuTextSelected]}>{sub.label}</Text>
 
                             </TouchableOpacity>
                         )

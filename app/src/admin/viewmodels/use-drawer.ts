@@ -19,9 +19,22 @@ export function useDrawer(){
             name:"inventory",
             label:"Inventory",
             icon:"archive",
-            subItems:[
-                {name:"inventory",label:"Categories", icon:"folder"},
-                {name:"create-product", label:"Products",icon:"file-text"}
+            subitems:[
+                {
+                    name:"inventory",
+                    label:"Categories",
+                    icon:"folder"
+                },
+                {
+                    name:"create-product",
+                    label:"Products",
+                    icon:"file-text"
+                },
+                {
+                    name:"create-service",
+                    label:"Servicios",
+                    icon:"service"
+                }
             ]
         }
     ]

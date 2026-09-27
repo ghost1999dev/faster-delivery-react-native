@@ -2,7 +2,7 @@ export interface DrawerItemOption{
     name:string //nombre de la ruta ('dashaboard)
     label:string
     icon:string
-    subItems?:{
+    subitems?:{
         name:string
         label:string
         icon:string
